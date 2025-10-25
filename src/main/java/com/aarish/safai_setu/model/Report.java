@@ -21,14 +21,13 @@ public class Report {
 	private String imageType;
 	@Lob
 	private byte[] imageData;
+	private String address;
+	private String longitude;
+	private String latitude;
 	
 	
-	
-	public Report() {
-		super();
-	}
-
-	public Report(int id, String heading, String description, String imageName, String imageType, byte[] imageData) {
+	public Report(int id, String heading, String description, String imageName, String imageType, byte[] imageData,
+			String address, String longitude, String latitude) {
 		super();
 		this.id = id;
 		this.heading = heading;
@@ -36,15 +35,49 @@ public class Report {
 		this.imageName = imageName;
 		this.imageType = imageType;
 		this.imageData = imageData;
+		this.address = address;
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
+
+	public Report() {
+		super();
+	}
+
 	
 
 	@Override
 	public String toString() {
 		return "Report [id=" + id + ", heading=" + heading + ", description=" + description + ", imageName=" + imageName
-				+ ", imageType=" + imageType + ", imageData=" + Arrays.toString(imageData) + "]";
+				+ ", imageType=" + imageType + ", imageData=" + Arrays.toString(imageData) + ", address=" + address
+				+ ", longitude=" + longitude + ", latitude=" + latitude + "]";
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	
 	public int getId() {
 		return id;
 	}
