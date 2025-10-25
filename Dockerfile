@@ -1,19 +1,15 @@
-# Stage 1: Build the jar using Maven
-FROM maven:3.8.3-openjdk-17 AS build
+# Stage 1: Build the jar using Maven with Java 21
+FROM maven:3.9.2-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-# Copy pom.xml first to cache dependencies
 COPY pom.xml .
-
-# Download dependencies
 RUN mvn dependency:go-offline -B
 
-# Copy source code
 COPY src ./src
 
-# Build the jar
 RUN mvn package -DskipTests
+
 
 # Stage 2: Run the application
 FROM eclipse-temurin:21-jdk
