@@ -23,14 +23,21 @@ public class Report {
 	private String imageType;
 	@Lob
 	private byte[] imageData;
+	private String resolvedImageName;
+	private String resolvedImageType;
+	@Lob
+	private byte[] resolvedImageData;
 	private String address;
 	private String longitude;
 	private String latitude;
 	private String status = "Pending";
 	private LocalDateTime date = LocalDateTime.now();
 
+	
+
 	public Report(int id, String heading, String description, String imageName, String imageType, byte[] imageData,
-			String address, String longitude, String latitude) {
+			String resolvedImageName, String resolvedImageType, byte[] resolvedImageData, String address,
+			String longitude, String latitude, String status, LocalDateTime date) {
 		super();
 		this.id = id;
 		this.heading = heading;
@@ -38,10 +45,17 @@ public class Report {
 		this.imageName = imageName;
 		this.imageType = imageType;
 		this.imageData = imageData;
+		this.resolvedImageName = resolvedImageName;
+		this.resolvedImageType = resolvedImageType;
+		this.resolvedImageData = resolvedImageData;
 		this.address = address;
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.status = status;
+		this.date = date;
 	}
+
+
 
 	public Report() {
 		super();
@@ -52,8 +66,10 @@ public class Report {
 	@Override
 	public String toString() {
 		return "Report [id=" + id + ", heading=" + heading + ", description=" + description + ", imageName=" + imageName
-				+ ", imageType=" + imageType + ", imageData=" + Arrays.toString(imageData) + ", address=" + address
-				+ ", longitude=" + longitude + ", latitude=" + latitude + ", date=" + date + ", status=" + status + "]";
+				+ ", imageType=" + imageType + ", imageData=" + Arrays.toString(imageData) + ", resolvedImageName="
+				+ resolvedImageName + ", resolvedImageType=" + resolvedImageType + ", resolvedImageData="
+				+ Arrays.toString(resolvedImageData) + ", address=" + address + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", status=" + status + ", date=" + date + "]";
 	}
 
 	public String getAddress() {
@@ -143,6 +159,42 @@ public class Report {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+
+	public String getResolvedImageName() {
+		return resolvedImageName;
+	}
+
+
+
+	public void setResolvedImageName(String resolvedImageName) {
+		this.resolvedImageName = resolvedImageName;
+	}
+
+
+
+	public String getResolvedImageType() {
+		return resolvedImageType;
+	}
+
+
+
+	public void setResolvedImageType(String resolvedImageType) {
+		this.resolvedImageType = resolvedImageType;
+	}
+
+
+
+	public byte[] getResolvedImageData() {
+		return resolvedImageData;
+	}
+
+
+
+	public void setResolvedImageData(byte[] resolvedImageData) {
+		this.resolvedImageData = resolvedImageData;
 	}
 
 

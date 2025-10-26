@@ -1,5 +1,6 @@
 package com.aarish.safai_setu.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +46,7 @@ public class ReportController {
 	
 	
 	@GetMapping("/report/{id}")
-    public ResponseEntity<Report> getProduct(@PathVariable int id) {
+    public ResponseEntity<Report> getReport(@PathVariable int id) {
         Report report = service.getReport(id);
         if (report != null) {
             return new ResponseEntity<>(report, HttpStatus.OK);
@@ -53,7 +55,7 @@ public class ReportController {
         }
     }
 	@GetMapping("/report/{reportId}/image")
-	public ResponseEntity<byte[]> getImageByProductId(@PathVariable int reportId) {
+	public ResponseEntity<byte[]> getImageByReportId(@PathVariable int reportId) {
 	    Report reportImage = service.getReport(reportId);
 	    byte[] imageFile = reportImage.getImageData();
 
@@ -63,7 +65,7 @@ public class ReportController {
 	}
 	
 	 @DeleteMapping("/report/{id}")
-	    public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+	 public ResponseEntity<String> deleteReport(@PathVariable int id) {
 	        Report report = service.getReport(id);
 	        if (report != null) {
 	            service.deleteProduct(id);
@@ -72,6 +74,27 @@ public class ReportController {
 	            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
 	        }
 
-	    }
+	 }
+	 @PutMapping("/report/{id}/resolve")
+	 public ResponseEntity<String> markReportResolved(
+	         @PathVariable int id,
+	         @RequestPart("report") Report reportDetails,
+	         @RequestPart("image") MultipartFile imageFile) {
+
+	     Report reportFromDb = null;
+	     try {
+	         reportFromDb = service.markResolved(id, reportDetails, imageFile);
+	     } catch (IOException e) {
+	         return new ResponseEntity<>("Failed to mark resolved", HttpStatus.BAD_REQUEST);
+	     }
+
+	     if (reportFromDb != null) {
+	         return new ResponseEntity<>("Submitted for verification", HttpStatus.OK);
+	     } else {
+	         return new ResponseEntity<>("Failed to mark resolved", HttpStatus.BAD_REQUEST);
+	     }
+	 }
+
+	 
 
 }

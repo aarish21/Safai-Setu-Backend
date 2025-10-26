@@ -2,6 +2,7 @@ package com.aarish.safai_setu.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,24 @@ public class ReportService {
 		// TODO Auto-generated method stub
 		repo.deleteById(id);
 	}
+	public Report markResolved(int id, Report reportDetails, MultipartFile imageFile) throws IOException {
+	    Optional<Report> optionalReport = repo.findById(id);
+	    if (!optionalReport.isPresent()) {
+	        return null;
+	    }
+
+	    Report report = optionalReport.get();
+
+	    // Save resolved image
+	    report.setResolvedImageName(imageFile.getOriginalFilename());
+	    report.setResolvedImageType(imageFile.getContentType());
+	    report.setResolvedImageData(imageFile.getBytes());
+
+	    // Update status
+	    report.setStatus("Pending Verification");
+
+	    return repo.save(report);
+	}
+
 
 }
