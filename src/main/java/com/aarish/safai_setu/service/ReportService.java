@@ -42,7 +42,7 @@ public class ReportService {
 		// TODO Auto-generated method stub
 		repo.deleteById(id);
 	}
-	public Report markResolved(int id, Report reportDetails, MultipartFile imageFile) throws IOException {
+	public Report markResolved(int id,MultipartFile imageFile) throws IOException {
 	    Optional<Report> optionalReport = repo.findById(id);
 	    if (!optionalReport.isPresent()) {
 	        return null;
@@ -54,8 +54,6 @@ public class ReportService {
 	    report.setResolvedImageName(imageFile.getOriginalFilename());
 	    report.setResolvedImageType(imageFile.getContentType());
 	    report.setResolvedImageData(imageFile.getBytes());
-
-	    // Update status
 	    report.setStatus("Pending Verification");
 
 	    return repo.save(report);

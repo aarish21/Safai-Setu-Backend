@@ -76,22 +76,17 @@ public class ReportController {
 
 	 }
 	 @PutMapping("/report/{id}/resolve")
-	 public ResponseEntity<String> markReportResolved(
+	 public ResponseEntity<Report> markReportResolved(
 	         @PathVariable int id,
-	         @RequestPart("report") Report reportDetails,
 	         @RequestPart("image") MultipartFile imageFile) {
 
-	     Report reportFromDb = null;
 	     try {
-	         reportFromDb = service.markResolved(id, reportDetails, imageFile);
+	         Report updated = service.markResolved(id, imageFile);
+	         if (updated != null)
+	             return new ResponseEntity<>(updated, HttpStatus.OK);
+	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	     } catch (IOException e) {
-	         return new ResponseEntity<>("Failed to mark resolved", HttpStatus.BAD_REQUEST);
-	     }
-
-	     if (reportFromDb != null) {
-	         return new ResponseEntity<>("Submitted for verification", HttpStatus.OK);
-	     } else {
-	         return new ResponseEntity<>("Failed to mark resolved", HttpStatus.BAD_REQUEST);
+	         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	     }
 	 }
 
