@@ -36,4 +36,10 @@ public class ReportService {
 		return repo.findById(id).orElse(null);
 	}
 
+
+	public void deleteProduct(int id) {
+		// TODO Auto-generated method stub
+		repo.deleteById(id);
+	}
+
 }

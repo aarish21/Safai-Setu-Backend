@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,5 +61,17 @@ public class ReportController {
 	            .contentType(MediaType.valueOf(reportImage.getImageType())) // use imageType
 	            .body(imageFile);
 	}
+	
+	 @DeleteMapping("/report/{id}")
+	    public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+	        Report report = service.getReport(id);
+	        if (report != null) {
+	            service.deleteProduct(id);
+	            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+	        } else {
+	            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+	        }
+
+	    }
 
 }

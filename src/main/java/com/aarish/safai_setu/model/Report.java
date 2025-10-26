@@ -1,5 +1,7 @@
 package com.aarish.safai_setu.model;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import jakarta.persistence.Entity;
@@ -24,8 +26,9 @@ public class Report {
 	private String address;
 	private String longitude;
 	private String latitude;
-	
-	
+	private String status = "Pending";
+	private LocalDateTime date = LocalDateTime.now();
+
 	public Report(int id, String heading, String description, String imageName, String imageType, byte[] imageData,
 			String address, String longitude, String latitude) {
 		super();
@@ -50,7 +53,7 @@ public class Report {
 	public String toString() {
 		return "Report [id=" + id + ", heading=" + heading + ", description=" + description + ", imageName=" + imageName
 				+ ", imageType=" + imageType + ", imageData=" + Arrays.toString(imageData) + ", address=" + address
-				+ ", longitude=" + longitude + ", latitude=" + latitude + "]";
+				+ ", longitude=" + longitude + ", latitude=" + latitude + ", date=" + date + ", status=" + status + "]";
 	}
 
 	public String getAddress() {
@@ -124,6 +127,22 @@ public class Report {
 
 	public void setImageData(byte[] imageData) {
 		this.imageData = imageData;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 
