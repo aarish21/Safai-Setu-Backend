@@ -63,6 +63,18 @@ public class ReportController {
 	            .contentType(MediaType.valueOf(reportImage.getImageType())) // use imageType
 	            .body(imageFile);
 	}
+	@GetMapping("/report/{reportId}/resolved-image")
+	public ResponseEntity<byte[]> getResolvedImage(@PathVariable int reportId) {
+	    Report report = service.getReport(reportId);
+	    byte[] imageFile = report.getResolvedImageData(); // <-- new field in Report
+
+	    if (imageFile == null)
+	        return ResponseEntity.notFound().build();
+
+	    return ResponseEntity.ok()
+	            .contentType(MediaType.valueOf(report.getResolvedImageType()))
+	            .body(imageFile);
+	}
 	
 	 @DeleteMapping("/report/{id}")
 	 public ResponseEntity<String> deleteReport(@PathVariable int id) {
